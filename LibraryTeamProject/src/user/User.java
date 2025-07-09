@@ -29,15 +29,17 @@ public abstract class User {
 	}
 	
 	//생성자
-	public User(String name, String userid, String password, String phone_number) {
+	public User(String name, String userid, String password, String phoneNumber, int userNum) {
 		this.name = name;
 		this.userid = userid;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
-	}
+		this.userNum = userNum;
+	}	
 	
 	// 로그인 추상메서드
 	public abstract boolean login(String inputId, String inputPw);
+
 	// 매개변수 유무, return 타입
 	
 	// 도서 검색 추상메서드
