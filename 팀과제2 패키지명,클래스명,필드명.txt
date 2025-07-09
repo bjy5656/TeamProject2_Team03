@@ -1,0 +1,62 @@
+
+패키지명, 클래스명, 필드명
+
+프로젝트명 : LibraryTeamProject
+패키지명, 클래스/인터페이스명 : 
+user
+- User(추상클래스)
+	사용자기본정보 필드
+		private String name
+		private int	age
+		private int	userNum;
+- LoginManager
+	Map 필드		로그인정보
+	getUer		map에 사용자 저장/조회 메소드
+	Login		사용자 로그인 기능 메소드
+
+member
+- Member(User 상속)
+	List 필드 	book
+	borrowBook 	도서대출메소드(재정의)
+	returnBook 	도서반납메소드(재정의)
+	checkList  	대출중인 책 목록 확인 메소드
+
+bookMaker
+- Borrow(인터페이스)
+	borrowBook	도서대출메소드
+	returnBook	도서반납메소드
+- Book(클래스) 
+	printInfo
+	borrowBook	도서대출메소드(재정의)
+
+serviceDeveloper
+- LibraryService
+	List 필드 	
+	printBookList		도서목록출력메소드
+	borrowBookService	도서대여메소드
+	returnBookService	도서바납메소드
+
+exceptionMaker
+- MaxBorrowException(한도초과)	
+- BookNotAvailableException(대출불가)
+- BookAlreadyException(이미대여)
+
+UIAppMaker
+- ConsoleUI
+	- 메뉴 메소드(스캐너 sc)
+	- 대출 책 목록 출력 메소드()
+	- 반납 책 목록 출력 메소드()
+	
+- LibraryApp(main)
+	- 위에 기능들 하나로 묶어서 사용할 수 있는 메인메소드 구현
+
+전체 
+필드 : private 
+메소드 : public 
+toString : 모든 메소드에서 오버라이딩 
+equals, hashCode : 비교가 필요한 경우만 오버라이딩 
+
+순서 
+1번, 3번 먼저 가능 
+1번 -> 2번 
+1, 2, 3 -> 4 -> 6
