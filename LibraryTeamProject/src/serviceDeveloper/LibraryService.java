@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import UIAppMaker.ConsoleUI;
 import bookMaker.Book;
+import exceptionMaker.BookAlreadyException;
+import exceptionMaker.BookNotAvailableException;
+import exceptionMaker.MaxBorrowException;
 import member.Member;
 
 public class LibraryService {	
@@ -20,7 +23,7 @@ public class LibraryService {
 	}
 
 	// 현재 책목록을 모두 출력하는 메소드
-	void printBookList() 
+	public void printBookList() 
 	{		
 		ConsoleUI.printBookList(bookList);
 	}
@@ -31,14 +34,14 @@ public class LibraryService {
 		
 	// borrowBook 에서는 해당 
 	
-	void borrowBookService(Member user, String bookName) 
+	public void borrowBookService(Member user, String bookName) throws MaxBorrowException, BookNotAvailableException, BookAlreadyException 
 	{
 		int index = findBookIndex(bookList, bookName, true);
 		boolean isFound = index != -1 ? true : false;
 		
 		if(isFound) 
 		{
-			user.borrowBook(bookList.get(index));
+			user.borrowBooks(bookList.get(index));
 			bookList.get(index).borrowBook();
 		}
 	}
@@ -49,14 +52,12 @@ public class LibraryService {
 	// 해당 책과 같은 이름의 도서관 책 목록에 있는 책의 대출 가능 상태를 true로 바꿔줌
 	
 	// returnbook 에서는 책에 index로 받아서 index에 있는 값을 제거
-	void returnBookService(Member user, String bookName) 
-	{
-		int index = findBookIndex(user.getBookList(), bookName);
-		boolean isFound = index != -1 ? true : false;
-		
-		if(isFound) 
+	public void returnBookService(Member user, String bookName) 
+	{		
+		if(user.bookSerch(bookName)) 
 		{
-			user.returnBook(index);
+			int index = findBookIndex((ArrayList<Book>)user.getBorrowBook(), bookName);
+			user.bookReturn(index);
 		}
 	}
 	
@@ -81,7 +82,7 @@ public class LibraryService {
 	}
 	
 	// 책리스트 내에서 책의 이름을 기준으로 인덱스를 찾아주는 메소드
-	int findBookIndex(ArrayList<Book> targetList, String targetName) 
+	private int findBookIndex(ArrayList<Book> targetList, String targetName) 
 	{
 		int index = 0;;
 		for(Book target : targetList) 
@@ -97,7 +98,7 @@ public class LibraryService {
 	}
 	
 	// 대출이 가능한 책 혹은 대출이 불가능한 책을 정해서 인덱스를 반환 하도록 오버로딩
-	int findBookIndex(ArrayList<Book> targetList, String targetName, boolean checkReturn) 
+	private int findBookIndex(ArrayList<Book> targetList, String targetName, boolean checkReturn) 
 	{
 		int index = 0;;
 		for(Book target : targetList) 
