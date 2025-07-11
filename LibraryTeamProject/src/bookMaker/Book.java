@@ -13,7 +13,7 @@ public class Book implements Borrow{
 	private String publisher;
 	private boolean isAvailable = true;
 	
-	
+
 	
 	//생성자 
 	public Book(String title, String author, String publisher) {
