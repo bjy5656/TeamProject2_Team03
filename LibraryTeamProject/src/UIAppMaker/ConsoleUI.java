@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import bookMaker.Book;
 import member.Member;
+import serviceDeveloper.LibraryService;
 import user.LoginManager;
 
 public class ConsoleUI {
@@ -60,7 +61,13 @@ public class ConsoleUI {
 				switch (choose) {
 				case 1:
 					// 로그인 메소드출력
-//				LoginManager.login(null, null);
+					System.out.println("ID : ");
+					String id = sc.next();
+					sc.nextLine();
+					System.out.println("Pw : ");
+					String pw = sc.next();
+					sc.nextLine();
+					LoginManager.login(id, pw);
 					// 성공하면 행동하는 while문 메소드 호출
 					menu(sc);
 					break;
@@ -93,7 +100,7 @@ public class ConsoleUI {
 					System.out.println("대출가능한 도서 목록");
 //				printBookList();
 					System.out.println("어떤 책을 대출하시게습니까?");
-//				LibraryService.borrowBookService();
+				LibraryService.borrowBookService();
 					break;
 
 				case 2:
