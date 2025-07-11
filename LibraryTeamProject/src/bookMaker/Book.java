@@ -13,7 +13,7 @@ public class Book implements Borrow{
 	private String publisher;
 	private boolean isAvailable = true;
 	
-	
+
 	
 	//생성자 
 	public Book(String title, String author, String publisher) {
@@ -29,7 +29,8 @@ public class Book implements Borrow{
 	@Override
 	public void borrowBook() throws MaxBorrowException, BookNotAvailableException, BookAlreadyException {
 		System.out.println("도서를 대출합니다!");
-		printInfo();
+//		printInfo();
+		System.out.println(this);
 		setAvailable(false);
 	}
 	
@@ -37,14 +38,9 @@ public class Book implements Borrow{
 	@Override
 	public void returnBook() {
 		System.out.println("도서를 반납합니다!");
-		printInfo();
+//		printInfo();
+		System.out.println(this);
 		setAvailable(true);
-	}
-	
-	//도서정보 출력 메소드
-	public void printInfo() {
-		System.out.println("책 이름 : " + getTitle());
-		System.out.println("저자 : " + getAuthor());
 	}
 	
 	//hashCode 오버라이딩 -> 출판사의 해시값 반환
@@ -63,7 +59,7 @@ public class Book implements Borrow{
 		if(obj instanceof Book) {
 	         String otherTitle = ((Book)obj).title;
 	         String otherAuthor = ((Book)obj).author;
-	         return this.title.equals(otherTitle) && this.Author.equals(otherAuthor);
+	         return this.title.equals(otherTitle) && this.author.equals(otherAuthor);
 	      }
 		return false;
 	}
@@ -71,9 +67,18 @@ public class Book implements Borrow{
 	//toString 오버라이딩 -> 도서 정보 반환 
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", publisher=" + publisher + ", isAvailable="
+		return "Book [제목 : " + title + ", 저자 : " + author + ", 출판사 : " + publisher + ", 대출가능 여부 : "
 				+ (isAvailable?"대출가능":"대출불가") + "]";
 	}
+	
+	
+	
+//	//메소드
+//	//도서정보 출력 메소드
+//	public void printInfo() {
+//		System.out.println("책 이름 : " + getTitle());
+//		System.out.println("저자 : " + getAuthor());
+//	}
 	
 	
 	
@@ -93,9 +98,7 @@ public class Book implements Borrow{
 	public String getPublisher() {
 		return publisher;
 	}
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}  
+ 
 	
 	
 	
