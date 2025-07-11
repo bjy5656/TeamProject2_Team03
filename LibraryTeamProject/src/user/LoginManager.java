@@ -10,12 +10,17 @@ public class LoginManager
 	Map<String, Member> userInfo; // ID, Member
 
 	// 생성자 필드 초기화
+	public LoginManager(Map<String, Member> userInfo) {
+		super();
+		this.userInfo = userInfo;
+	}
 	
 	// 메소드
 	// 로그인 메소드
-	public boolean login(String id, String ps) 
+	public boolean login(String InputId, String InputPw) 
 	{
-		if(!userInfo.containsKey(id)) 
+//		id 입력을 잘못했을시
+		if(!userInfo.containsKey(InputId)) 
 		{
 			System.out.println("아이디가 없습니다.");
 			return false;
@@ -23,26 +28,25 @@ public class LoginManager
 		
 		else 
 		{
-			// 여기에 Member 필드에 패스워드 값 추가되면 그다음에 작성
-//			if(userInfo.get(id).getPs().equals(ps)) 
-//			{
-//				System.out.println("로그인 성공하였습니다.");
-//				return true;
-//			}
-			
-//			else 
-//			{
-//			
-//			
-//				sysout("패스워드가 틀립니다");
-//				return false;
-//			}
+			if(!userInfo.containsValue(InputPw))
+			{
+				System.out.println("패스워드가 틀립니다");
+				return false;
+			}
+			else 
+			{
+			if(userInfo.get(InputId).equals(InputPw)) 
+			{	
+				System.out.println("로그인 성공하였습니다.");
+				return true;
+			}
+			}
 			return true;
 		}
 	}
-	
-	
+
 	// getUser
+//	Member 클래스의 userId 가져오기
 	public Member getUser(String userId) 
 	{
 		return userInfo.get(userId);
