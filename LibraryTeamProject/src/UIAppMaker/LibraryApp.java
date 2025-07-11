@@ -7,6 +7,7 @@ import serviceDeveloper.LibraryService;
 
 public class LibraryApp {
 	public static void main(String[] args) {
+
 		Scanner sc = new Scanner(System.in);
 		Member member = new Member();
 		ConsoleUI UI = new ConsoleUI(member);
@@ -15,5 +16,6 @@ public class LibraryApp {
 		UI.loginMenu(sc);
 		
 		sc.close();
+
 	}
 }
