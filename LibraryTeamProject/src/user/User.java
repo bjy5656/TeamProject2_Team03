@@ -1,5 +1,7 @@
 package user;
 
+import bookMaker.Book;
+
 // 유저 추상클래스 생성
 public abstract class User {
 	
@@ -46,9 +48,9 @@ public abstract class User {
 	public abstract boolean bookSerch(String serch);
 	
 	// 도서 대출 추상메서드
-	public abstract void borrowBooks (String bookTitle);
+	public abstract void borrowBooks (Book book);
 
 	// 도서 반납 추상메서드
-	public abstract void bookReturn (String bookTitle);
+	public abstract void bookReturn (int index);
 	
 }
