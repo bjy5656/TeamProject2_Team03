@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import bookMaker.Book;
+import exceptionMaker.BookAlreadyException;
+import exceptionMaker.BookNotAvailableException;
+import exceptionMaker.MaxBorrowException;
 import member.Member;
 import serviceDeveloper.LibraryService;
 import user.LoginManager;
@@ -38,13 +41,6 @@ public class ConsoleUI {
 			System.out.printf("%d. ", count);
 			Book book = list.next();
 			System.out.println(book.toString());
-			if (book.isAvailable()) {
-				System.out.println("[대출 가능]");
-			}
-
-			else {
-				System.out.println("[대출 중]");
-			}
 			count++;
 		}
 		System.out.println("=================================");
@@ -67,7 +63,7 @@ public class ConsoleUI {
 					System.out.println("Pw : ");
 					String pw = sc.next();
 					sc.nextLine();
-					LoginManager.login(id, pw);
+					LibraryApp.server.login(id, pw);
 					// 성공하면 행동하는 while문 메소드 호출
 					menu(sc);
 					break;
@@ -90,6 +86,8 @@ public class ConsoleUI {
 			System.out.print("사용할 메뉴 입력 : ");
 
 			int choose;
+			String targetName = "";
+
 			try {
 				choose = sc.nextInt();
 
@@ -98,21 +96,23 @@ public class ConsoleUI {
 				switch (choose) {
 				case 1:
 					System.out.println("대출가능한 도서 목록");
-//				printBookList();
+					printBookList(LibraryApp.library.getBookList());
 					System.out.println("어떤 책을 대출하시게습니까?");
-				LibraryService.borrowBookService();
+					targetName = sc.next();
+					LibraryApp.library.borrowBookService(curLoginUser, targetName);
 					break;
 
 				case 2:
 					System.out.println("반납가능한 도서 목록");
-//				Member.checkList();
+					printBookList((ArrayList<Book>) curLoginUser.getBorrowBook());
 					System.out.println("어떤 책을 반납하시게습니까?");
-//				Member.returnBook();
-
+					targetName = sc.next();
+					LibraryApp.library.returnBookService(curLoginUser, targetName);
 					break;
+
 				case 3:
 					System.out.println("도서 목록을 출력합니다");
-//				printBookList();
+					printBookList(LibraryApp.library.getBookList());
 					break;
 
 				case 4:
@@ -127,7 +127,16 @@ public class ConsoleUI {
 				}
 			} catch (InputMismatchException e) {
 				e.printStackTrace();
+			} catch (MaxBorrowException e) {
+				e.printStackTrace();
+			} catch (BookNotAvailableException e) {
+				e.printStackTrace();
+			} catch (BookAlreadyException e) {
+				e.printStackTrace();
+			} finally {
+				sc.nextLine();
 			}
+
 		}
 	}
 }
