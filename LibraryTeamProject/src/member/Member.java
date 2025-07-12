@@ -14,8 +14,9 @@ public class Member extends User {
 	private List<Book> borrowBook; // 유저에 빌린 책 정보를 담기 위함
 
 	// 생성자 : user에 회원정보와 빌린 책 리스트를 ArrayList에 추가하려 함
-	public Member(String name, String userid, String password, String phoneNumber, int userNum) {
-		super(name, userid, password, phoneNumber, userNum);
+	public Member() {
+		super(null, null, null, null, 0);
+		this.borrowBook = new ArrayList<>();
 	}
 
 	public Member(String name, String userid, String password, String phoneNumber, int userNum, ArrayList<User> user) {
@@ -33,6 +34,8 @@ public class Member extends User {
 	}
 
 	// 메소드 오버라이딩
+	
+	
 	@Override
 	public void borrowBooks(Book book) {
 		try {
@@ -51,6 +54,11 @@ public class Member extends User {
 		}
 
 		System.out.println(book.getTitle() + " 대출을 완료했습니다!");
+	}
+
+	@Override
+	public String toString() {
+		return getName() + "님의 빌린책은" + borrowBook + "입니다";
 	}
 
 	@Override
