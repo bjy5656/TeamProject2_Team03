@@ -39,6 +39,12 @@ public abstract class User {
 		this.userNum = userNum;
 	}	
 	
+	// toString 메소드 오버라이딩
+	@Override
+	public String toString() {
+		return "이름" + name + "유저id" + userid + "유저pw" + password + "유저 폰넘버" + phoneNumber + "유저 넘버" + userNum;
+	}
+	
 	// 로그인 추상메서드
 	public abstract boolean login(String inputId, String inputPw);
 
@@ -52,5 +58,6 @@ public abstract class User {
 
 	// 도서 반납 추상메서드
 	public abstract void bookReturn (int index);
+	
 	
 }
