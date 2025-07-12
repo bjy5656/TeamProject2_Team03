@@ -42,7 +42,7 @@ public abstract class User {
 	// toString 메소드 오버라이딩
 	@Override
 	public String toString() {
-		return "이름" + name + "유저id" + userid + "유저pw" + password + "유저 폰넘버" + phoneNumber + "유저 넘버" + userNum;
+		return "이름" + name + "유저 id" + userid + "유저 pw" + password + "유저 폰넘버" + phoneNumber + "유저 넘버" + userNum;
 	}
 	
 	// 로그인 추상메서드
