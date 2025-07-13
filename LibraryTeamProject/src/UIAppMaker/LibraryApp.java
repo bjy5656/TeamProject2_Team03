@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import member.Member;
 import serviceDeveloper.LibraryService;
+import user.LoginManager;
 
 public class LibraryApp {
 	public static LibraryService library = new LibraryService();
