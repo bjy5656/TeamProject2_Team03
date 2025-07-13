@@ -132,7 +132,7 @@ public class ConsoleUI {
 				case 1:
 					System.out.println("대출가능한 도서 목록");
 					printBookList(LibraryApp.library.getBookList());
-					System.out.println("어떤 책을 대출하시게습니까?");
+					System.out.println("어떤 책을 대출하시겠습니까?");
 					targetName = sc.next();
 					num = stringToInt(targetName);
 					if (num - 1 >= 0 && num - 1 < LibraryApp.library.getBookList().size()) {
@@ -145,7 +145,7 @@ public class ConsoleUI {
 				case 2:
 					System.out.println("반납가능한 도서 목록");
 					printBookList((ArrayList<Book>) curLoginUser.getBorrowBook());
-					System.out.println("어떤 책을 반납하시게습니까?");
+					System.out.println("어떤 책을 반납하시겠습니까?");
 					targetName = sc.next();
 					num = stringToInt(targetName);
 					if (num - 1 >= 0 && num - 1 < curLoginUser.getBorrowBook().size()) {
