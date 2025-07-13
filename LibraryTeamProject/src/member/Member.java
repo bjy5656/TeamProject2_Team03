@@ -50,6 +50,7 @@ public class Member extends User {
 				{
 					book.borrowBook();
 					borrowBook.add(book);
+					System.out.println(book.getTitle() + " 대출을 완료했습니다!");
 				}
 			} else {
 				throw new BookAlreadyException();
@@ -62,8 +63,6 @@ public class Member extends User {
 		} catch (BookAlreadyException e) {
 			System.out.println(book.getTitle() + "은/는 이미 대출 중입니다.");
 		}
-
-		System.out.println(book.getTitle() + " 대출을 완료했습니다!");
 	}
 
 	@Override

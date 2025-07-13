@@ -100,7 +100,7 @@ public class LibraryService {
 	// 책리스트 내에서 책의 이름을 기준으로 인덱스를 찾아주는 메소드
 	private int findBookIndex(ArrayList<Book> targetList, String targetName) 
 	{
-		int index = 0;;
+		int index = 0;
 		for(Book target : targetList) 
 		{
 			if(target.getTitle().equals(targetName)) 
@@ -116,7 +116,7 @@ public class LibraryService {
 	// 대출이 가능한 책 혹은 대출이 불가능한 책을 정해서 인덱스를 반환 하도록 오버로딩
 	private int findBookIndex(ArrayList<Book> targetList, String targetName, boolean checkReturn) 
 	{
-		int index = 0;;
+		int index = 0;
 		for(Book target : targetList) 
 		{
 			if(target.getTitle().equals(targetName)) 
@@ -126,7 +126,7 @@ public class LibraryService {
 			index ++;
 		}
 		
-		return -1;
+		return findBookIndex(targetList, targetName);
 	}
 	
 	public ArrayList<Book> findBookList(String targetName)
