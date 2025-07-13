@@ -15,10 +15,14 @@ import user.LoginManager;
 
 public class ConsoleUI {
 	// 필드
-	Member curLoginUser;
+	private Member curLoginUser;
 
 	public ConsoleUI(Member curLoginUser) {
 		this.curLoginUser = null;
+	}
+
+	public void setCurLoginUser(Member curLoginUser) {
+		this.curLoginUser = curLoginUser;
 	}
 
 	static public void menuPrinter(String... menuNames) {
@@ -48,9 +52,13 @@ public class ConsoleUI {
 
 	void loginMenu(Scanner sc) {
 		int choose = 0;
-		while (choose != 2) {
+		String id = "";
+		String pw = "";
+		String name = "";
+		String phoneNum = "";
+		while (choose != 3) {
 			try {
-				menuPrinter("로그인", "종료");
+				menuPrinter("로그인", "회원 가입", "종료");
 				choose = sc.nextInt();
 				sc.nextLine();
 
@@ -63,13 +71,35 @@ public class ConsoleUI {
 					System.out.println("Pw : ");
 					String pw = sc.next();
 					sc.nextLine();
-					LibraryApp.server.login(id, pw);
-					// 성공하면 행동하는 while문 메소드 호출
-					menu(sc);
+					if (LibraryApp.server.login(id, pw)) {
+						// 성공하면 행동하는 while문 메소드 호출
+						curLoginUser = LibraryApp.server.getUser(id);
+						menu(sc);
+					}
 					break;
 				case 2:
+					System.out.println("이름 : ");
+					name = sc.next();
+					sc.nextLine();
+
+					System.out.println("전화번호 : ");
+					phoneNum = sc.next();
+					sc.nextLine();
+
+					System.out.println("ID : ");
+					id = sc.next();
+					sc.nextLine();
+
+					System.out.println("Pw : ");
+					pw = sc.next();
+					sc.nextLine();
+
+					LibraryApp.server.register(id, pw, name, phoneNum);
+
+					break;
+
 				default:
-					choose = 2;
+					choose = 3;
 					break;
 				}
 			} catch (InputMismatchException e) {
