@@ -32,7 +32,7 @@ public class Book implements Borrow {
 		System.out.println("도서를 대출합니다!");
 //		printInfo();
 		System.out.println(this);
-		setAvailable(false);
+		isAvailable = false;
 	}
 
 	// 도서반납 오버라이딩 -> 메시지 출력, 도서 정보 출력, 대출가능 여부 변경(true)
@@ -41,7 +41,7 @@ public class Book implements Borrow {
 		System.out.println("도서를 반납합니다!");
 //		printInfo();
 		System.out.println(this);
-		setAvailable(true);
+		isAvailable = true;
 	}
 
 	// hashCode 오버라이딩 -> 이름, 저자, 출판사를 이용해서 생성한 해시값 반환
@@ -67,7 +67,7 @@ public class Book implements Borrow {
 	// toString 오버라이딩 -> 도서 정보 반환
 	@Override
 	public String toString() {
-		return "Book [제목 : " + title + ", 저자 : " + author + ", 출판사 : " + publisher + ", 대출가능 여부 : "
+		return "[제목 : " + title + ", 저자 : " + author + ", 출판사 : " + publisher + ", 대출가능 여부 : "
 				+ (isAvailable ? "대출가능" : "대출불가") + "]";
 	}
 	
