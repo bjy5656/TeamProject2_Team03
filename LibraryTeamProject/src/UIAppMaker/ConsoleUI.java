@@ -21,10 +21,6 @@ public class ConsoleUI {
 		this.curLoginUser = null;
 	}
 
-	public void setCurLoginUser(Member curLoginUser) {
-		this.curLoginUser = curLoginUser;
-	}
-
 	static public void menuPrinter(String... menuNames) {
 		int count = 1;
 		System.out.println("=================================");
@@ -58,7 +54,9 @@ public class ConsoleUI {
 		String phoneNum = "";
 		while (choose != 3) {
 			try {
+
 				menuPrinter("로그인", "회원 가입", "종료");
+
 				choose = sc.nextInt();
 				sc.nextLine();
 
@@ -66,16 +64,18 @@ public class ConsoleUI {
 				case 1:
 					// 로그인 메소드출력
 					System.out.println("ID : ");
-					String id = sc.next();
+					id = sc.next();
 					sc.nextLine();
 					System.out.println("Pw : ");
-					String pw = sc.next();
+					pw = sc.next();
 					sc.nextLine();
+
+					// 성공하면 행동하는 while문 메소드 호출
 					if (LibraryApp.server.login(id, pw)) {
-						// 성공하면 행동하는 while문 메소드 호출
 						curLoginUser = LibraryApp.server.getUser(id);
 						menu(sc);
 					}
+
 					break;
 				case 2:
 					System.out.println("이름 : ");
@@ -94,16 +94,21 @@ public class ConsoleUI {
 					pw = sc.next();
 					sc.nextLine();
 
-					LibraryApp.server.register(id, pw, name, phoneNum);
+					LibraryApp.server.register(  name,id,pw, phoneNum);
 
 					break;
-
-				default:
+				case 3:
 					choose = 3;
+					break;
+				default:
+					System.out.println("올바른 값을 입력해주세요");
+
 					break;
 				}
 			} catch (InputMismatchException e) {
-				e.printStackTrace();
+				// e.printStackTrace();
+				System.out.println("올바른 값을 입력해주세요");
+				sc.nextLine();
 			}
 		}
 	}
@@ -116,11 +121,11 @@ public class ConsoleUI {
 			System.out.print("사용할 메뉴 입력 : ");
 
 			int choose;
+			int num;
 			String targetName = "";
 
 			try {
 				choose = sc.nextInt();
-
 				sc.nextLine();
 
 				switch (choose) {
@@ -129,7 +134,12 @@ public class ConsoleUI {
 					printBookList(LibraryApp.library.getBookList());
 					System.out.println("어떤 책을 대출하시게습니까?");
 					targetName = sc.next();
-					LibraryApp.library.borrowBookService(curLoginUser, targetName);
+					num = stringToInt(targetName);
+					if (num - 1 >= 0 && num - 1 < LibraryApp.library.getBookList().size()) {
+						LibraryApp.library.borrowBookService(curLoginUser, num - 1);
+					} else {
+						LibraryApp.library.borrowBookService(curLoginUser, targetName);
+					}
 					break;
 
 				case 2:
@@ -137,12 +147,21 @@ public class ConsoleUI {
 					printBookList((ArrayList<Book>) curLoginUser.getBorrowBook());
 					System.out.println("어떤 책을 반납하시게습니까?");
 					targetName = sc.next();
-					LibraryApp.library.returnBookService(curLoginUser, targetName);
+					num = stringToInt(targetName);
+					if (num - 1 >= 0 && num - 1 < curLoginUser.getBorrowBook().size()) {
+						LibraryApp.library.returnBookService(curLoginUser, num - 1);
+					} else {
+						LibraryApp.library.returnBookService(curLoginUser, targetName);
+					}
 					break;
 
 				case 3:
-					System.out.println("도서 목록을 출력합니다");
-					printBookList(LibraryApp.library.getBookList());
+					System.out.println("도서 이름을 작성해주세요");
+					targetName = sc.next();
+					if (LibraryApp.library.findBookList(targetName) == null)
+						System.out.println("검색결과가 없습니다");
+					else
+						printBookList(LibraryApp.library.findBookList(targetName));
 					break;
 
 				case 4:
@@ -156,7 +175,8 @@ public class ConsoleUI {
 
 				}
 			} catch (InputMismatchException e) {
-				e.printStackTrace();
+				System.out.println("올바른 값을 입력해주세요");
+				// e.printStackTrace();
 			} catch (MaxBorrowException e) {
 				e.printStackTrace();
 			} catch (BookNotAvailableException e) {
@@ -168,5 +188,19 @@ public class ConsoleUI {
 			}
 
 		}
+	}
+
+	public int stringToInt(String target) {
+		try {
+			int num = Integer.parseInt(target);
+			return num;
+
+		} catch (NumberFormatException e) {
+			return -1;
+		}
+	}
+
+	public void setCurLoginUser(Member curLoginUser) {
+		this.curLoginUser = curLoginUser;
 	}
 }
