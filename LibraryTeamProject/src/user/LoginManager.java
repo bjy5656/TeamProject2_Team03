@@ -1,5 +1,6 @@
 package user;
 
+import java.util.HashMap;
 import java.util.Map; 
 import member.Member;
 
@@ -12,6 +13,7 @@ public class LoginManager
 	// 생성자 필드 초기화
 	public LoginManager() {
 		super();
+		userInfo = new HashMap<String, Member>();
 	}
 
 	// 회원가입 메소드
@@ -65,7 +67,7 @@ public class LoginManager
 //	   toString 메소드 오버라이딩
 	@Override
 	public String toString() {
-		return "로그인 기능 클래스입니다.";
+		return "현재 유저리스트는 : " + userInfo + "입니다";
 	}
 	
 	// getUser

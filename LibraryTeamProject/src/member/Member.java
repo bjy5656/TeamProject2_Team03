@@ -11,6 +11,7 @@ import user.User;
 
 public class Member extends User {
 	// 필드
+	final int MAX_BORROW_COUNT = 20;
 	private List<Book> borrowBook; // 유저에 빌린 책 정보를 담기 위함
 
 	// 생성자 : user에 회원정보와 빌린 책 리스트를 ArrayList에 추가하려 함
@@ -19,7 +20,7 @@ public class Member extends User {
 		this.borrowBook = new ArrayList<>();
 	}
 
-	public Member(String name, String userid, String password, String phoneNumber, int userNum, ArrayList<User> user) {
+	public Member(String name, String userid, String password, String phoneNumber, int userNum) {
 		super(name, userid, password, phoneNumber, userNum);
 		this.borrowBook = new ArrayList<>();
 	}
@@ -40,7 +41,16 @@ public class Member extends User {
 	public void borrowBooks(Book book) {
 		try {
 			if (book.isAvailable()) {
-				book.borrowBook();
+				if(borrowBook.size() > MAX_BORROW_COUNT) 
+				{
+					throw new MaxBorrowException();
+				}
+				
+				else 
+				{
+					book.borrowBook();
+					borrowBook.add(book);
+				}
 			} else {
 				throw new BookAlreadyException();
 			}
@@ -58,6 +68,7 @@ public class Member extends User {
 
 	@Override
 	public String toString() {
+		super.toString();
 		return getName() + "님의 빌린책은" + borrowBook + "입니다";
 	}
 

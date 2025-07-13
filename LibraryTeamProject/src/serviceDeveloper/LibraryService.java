@@ -1,6 +1,7 @@
 package serviceDeveloper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import UIAppMaker.ConsoleUI;
 import bookMaker.Book;
@@ -47,8 +48,13 @@ public class LibraryService {
 		if(isFound) 
 		{
 			user.borrowBooks(bookList.get(index));
-			bookList.get(index).borrowBook();
 		}
+	}
+	
+	// 책의 인덱스로 빌리는 메소드
+	public void borrowBookService(Member user, int index) throws MaxBorrowException, BookNotAvailableException, BookAlreadyException 
+	{		
+		user.borrowBooks(bookList.get(index));
 	}
 
 	// 유저가 빌린 책을 반납하는 메소드
@@ -63,6 +69,12 @@ public class LibraryService {
 			int index = findBookIndex((ArrayList<Book>)user.getBorrowBook(), bookName);
 			user.bookReturn(index);
 		}
+	}
+	
+	// 번호로 반납
+	public void returnBookService(Member user, int index) 
+	{		
+		user.bookReturn(index);
 	}
 	
 	// 랜덤으로 책을 5개 생성 해주는 메소드
@@ -117,10 +129,27 @@ public class LibraryService {
 		return -1;
 	}
 	
+	public ArrayList<Book> findBookList(String targetName)
+	{
+		ArrayList<Book> result = new ArrayList<Book>();
+		Iterator<Book> iter = bookList.iterator();
+		while(iter.hasNext()) 
+		{
+			Book checkBook = iter.next();
+			if(checkBook.getTitle().equals(targetName)) 
+			{
+				result.add(checkBook);
+			}
+		}
+		
+		return result;
+	}
+	
 	// toString 메소드 오버라이딩
 		@Override
 		public String toString() {
-			return "도서관 관리 메소드 입니다.";
+			String info = "현재 도서관에 있는 책목록은 " + bookList + "입니다";
+			return info;
 		}
 	
 }
