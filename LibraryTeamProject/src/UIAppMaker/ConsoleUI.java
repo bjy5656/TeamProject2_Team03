@@ -5,13 +5,13 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import bookMaker.Book;
+import bookDTO.Book;
 import exceptionMaker.BookAlreadyException;
 import exceptionMaker.BookNotAvailableException;
 import exceptionMaker.MaxBorrowException;
-import member.Member;
 import serviceDeveloper.LibraryService;
-import user.LoginManager;
+import userDTO.LoginManager;
+import userDTO.Member;
 
 public class ConsoleUI {
 	// 필드
@@ -72,7 +72,7 @@ public class ConsoleUI {
 
 					// 성공하면 행동하는 while문 메소드 호출
 					if (LibraryApp.server.login(id, pw)) {
-						curLoginUser = LibraryApp.server.getUser(id);
+						curLoginUser = LibraryApp.server.getUser(id); // -> 요부분에서 로그인 함수 출력
 						menu(sc);
 					}
 

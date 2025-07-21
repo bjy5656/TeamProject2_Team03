@@ -1,29 +1,31 @@
-package member;
+package userDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bookMaker.Book;
+import bookDTO.Book;
 import exceptionMaker.BookAlreadyException;
 import exceptionMaker.BookNotAvailableException;
 import exceptionMaker.MaxBorrowException;
-import user.User;
 
 public class Member extends User {
 	// 필드
-	final int MAX_BORROW_COUNT = 20;
-	private List<Book> borrowBook; // 유저에 빌린 책 정보를 담기 위함
+	final int MAX_BORROW_COUNT = 20; //
+	private List<Book> borrowBook; // 유저에 빌린 책 정보를 담기 위함 -> 테이블 관리
 
 	// 생성자 : user에 회원정보와 빌린 책 리스트를 ArrayList에 추가하려 함
 	public Member() {
-		super(null, null, null, null, 0);
+		super(0, null, null, null, null);
 		this.borrowBook = new ArrayList<>();
+	}
+	
+	public Member(int userNum, String userName, String userId, String userPw, String userPhoneNumber) 
+	{
+		super(userNum, userName, userId, userPw, userPhoneNumber);
+		this.borrowBook = borrowBook;
 	}
 
-	public Member(String name, String userid, String password, String phoneNumber, int userNum) {
-		super(name, userid, password, phoneNumber, userNum);
-		this.borrowBook = new ArrayList<>();
-	}
+
 
 	// getter, setter
 	public List<Book> getBorrowBook() {
@@ -68,7 +70,7 @@ public class Member extends User {
 	@Override
 	public String toString() {
 		super.toString();
-		return getName() + "님의 빌린책은" + borrowBook + "입니다";
+		return getUserName() + "님의 빌린책은" + borrowBook + "입니다";
 	}
 
 	@Override
@@ -79,8 +81,8 @@ public class Member extends User {
 
 	@Override
 	public boolean login(String inputId, String inputPw) {
-		if (super.getUserid().equals(inputId) && super.getPassword().equals(inputPw)) {
-			System.out.println("로그인 성공!" + getName() + "님 환영합니다!");
+		if (super.getUserId().equals(inputId) && super.getUserPw().equals(inputPw)) {
+			System.out.println("로그인 성공!" + getUserName() + "님 환영합니다!");
 			return true;
 		} else {
 			System.out.println("로그인에 실패하였습니다");

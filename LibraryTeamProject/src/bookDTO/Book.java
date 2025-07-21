@@ -1,4 +1,4 @@
-package bookMaker;
+package bookDTO;
 
 import java.util.Objects;
 
@@ -12,7 +12,6 @@ public class Book implements Borrow {
 	private String author;
 	private String publisher;
 	private boolean isAvailable = true;
-
 	
 	// 생성자
 	public Book(String title, String author, String publisher) {
