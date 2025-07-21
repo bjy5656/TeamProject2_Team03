@@ -1,4 +1,4 @@
-package bookMaker;
+package bookDTO;
 import exceptionMaker.BookNotAvailableException;
 import exceptionMaker.MaxBorrowException;
 

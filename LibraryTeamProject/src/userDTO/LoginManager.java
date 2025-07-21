@@ -1,14 +1,13 @@
-package user;
+package userDTO;
 
 import java.util.HashMap;
-import java.util.Map; 
-import member.Member;
+import java.util.Map;
 
 public class LoginManager
 {
 	
 	// private 필드
-	private Map<String, Member> userInfo; // ID, Member
+	private Map<String, Member> userInfo; // ID, Member -> 테이블 생성
 
 	// 생성자 필드 초기화
 	public LoginManager() {
@@ -27,8 +26,9 @@ public class LoginManager
 		}
 		{
 			System.out.println("회원가입에 성공했습니다!");
-			Member newMember = new Member(name, InputId, InputPw, phoneNumber, userInfo.size());
-			userInfo.put(InputId, newMember);
+			Member newMember = new Member(userInfo.size(), name, InputId, InputPw, phoneNumber);
+			userInfo.put(InputId, newMember); 
+			// 유저 회원가입 메소드
 			return true;
 		}
 	}
@@ -46,14 +46,14 @@ public class LoginManager
 		else 
 		{
 			// InputId에 대응하는 InputPw 확인
-			if (!userInfo.get(InputId).getPassword().equals(InputPw)) 
+			if (!userInfo.get(InputId).getUserPw().equals(InputPw)) 
 			{
 				System.out.println("패스워드가 틀립니다.");
 				return false;
 			}
 			else 
 			{
-			if(userInfo.get(InputId).getPassword().equals(InputPw)) 
+			if(userInfo.get(InputId).getUserPw().equals(InputPw)) 
 			{	
 				System.out.println("로그인 성공하였습니다.");
 				return true;
