@@ -294,7 +294,7 @@ public class RentalDAO {
 	public void borrowBookByNumber(int bookNumber, int userNumber) throws MaxBorrowException, BookNotAvailableException, BookAlreadyException
 	{
 		String query = "UPDATE TBL_BOOKS "
-				+ "SET USER_NUMBER = ?, BOOK_AVAILABLE = 'T' "
+				+ "SET USER_NUMBER = ?, BOOK_AVAILABLE = 'F' "
 				+ "WHERE BOOK_NUMBER = ?";
 		
 		try {
@@ -344,7 +344,7 @@ public class RentalDAO {
 	public void returnBookByNumber(int bookNumber, int userNumber) 
 	{
 		String query = "UPDATE TBL_BOOKS "
-				+ "SET USER_NUMBER = NULL, BOOK_AVAILABLE = 'F' "
+				+ "SET USER_NUMBER = NULL, BOOK_AVAILABLE = 'T' "
 				+ "WHERE BOOK_NUMBER = ? AND USER_NUMBER = ?";
 		
 		try {
