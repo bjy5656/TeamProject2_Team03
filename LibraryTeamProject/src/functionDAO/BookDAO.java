@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import bookDTO.Book;
+import bookDTO.BookDTO;
 
 public class BookDAO {
    
@@ -14,7 +14,7 @@ public class BookDAO {
    public ResultSet resultSet;
    
    //책 추가
-   public void addBook(Book book) {
+   public void addBook(BookDTO book) {
       String query = "INSERT INTO TBL_BOOKS"
             + "(BOOK_NUMBER, BOOK_TITLE, BOOK_AUTHOR) "
             + "VALUES(SEQ_BOOK.NEXTVAL, ?, ?)";

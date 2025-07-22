@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import userDTO.Member;
-import userDTO.User;
+import userDTO.UserDTO;
 
 public class UserDAO {
 
@@ -19,7 +18,7 @@ public class UserDAO {
 
 	// 유저 회원가입 -> return void
 	// 회원가입
-	public void join(Member memberDTO) {
+	public void join(UserDTO memberDTO) {
 		String query = "INSERT INTO TBL_USER" + "(" + "user_number, " + "user_name, " + "USER_id, " + "user_pw, "
 				+ "user_phonenumber " + ") " + "VALUES(SEQ_USER.NEXTVAL, ?, ?, ?, ?)";
 
@@ -174,45 +173,61 @@ public class UserDAO {
 	} // 아이디 중복확인 메소드 끝
 
 	// 유저 정보 조회 -> return void
-	public void userInfo(Member memberDTO) {
-	    String query = 
-	            "SELECT TBL_USER "
-	        +   "USER_ID = ? "
-	        +   "USER_PW = ? "
-	        +   "USER_NUMBER = ? ";
-	
-	    try {
-	         connection = DBConnecter.getConnection();
-	         preparedStatement = connection.prepareStatement(query);
-	         preparedStatement.setString(1, memberDTO.getUserId());
-	         preparedStatement.setString(2, memberDTO.getUserPw());
-	         preparedStatement.setInt(3, memberDTO.getUserNum());
-	    }  catch (SQLException e) {
-	        System.out.println("저장된 정보가 없습니다.");
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (resultSet != null) {
-	                resultSet.close();
-	            }
-	            if(preparedStatement != null) {
-	                preparedStatement.close();
-	            }
-	            if(connection != null) {
-	                connection.close();
-	            } 
-	        }catch (SQLException e) {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-	            }
-	        }
-	    }
+	public UserDTO userInfo(int userNumber) {
+		String query = "SELECT USER_ID, USER_PW, user_phonenumber, USER_NAME " 
+				+ "FROM TBL_USER "
+				+ "WHERE USER_NUMBER = ?";
+
+		UserDTO targetMember = null;
+
+		try {
+			connection = DBConnecter.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userNumber);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			
+			String userId = resultSet.getString("USER_ID");
+			String userPw = resultSet.getString("USER_PW");
+			String userPhoneNumber = resultSet.getString("user_phonenumber");
+			String userName = resultSet.getString("USER_NAME");
+			
+			targetMember = new UserDTO(userName, userId, userPw, userPhoneNumber);
+
+		} catch (SQLException e) {
+			System.out.println("저장된 정보가 없습니다.");
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(targetMember == null) System.out.println("정보 조회 실패");
+		else 
+		{
+			System.out.println("정보 조회 완료");
+		}
+		
+		return targetMember;
+	}
 
 	// 유저 정보 수정 -> return void\
-	//USER_ID와 USER_PW를 입력받아서 맞으면 수정 처리 진행
-	public void update(Member memberDTO) {
+	// USER_PW를 입력받아서 맞으면 수정 처리 진행
+	public void update(UserDTO memberDTO, int userNumber) {
 		String query = "UPDATE TBL_USER " + "SET USER_NAME = ? , " + "USER_PHONENUMBER = ? , " + "USER_ID = ? , "
-				+ "USER_PW = ? " + "WHERE USER_ID = ? AND USER_PW = ?";
+				+ "USER_PW = ? " + "WHERE USER_NUMBER = ?";
 
 		try {
 			connection = DBConnecter.getConnection();
@@ -220,10 +235,42 @@ public class UserDAO {
 			preparedStatement.setString(1, memberDTO.getUserName());
 			preparedStatement.setString(2, memberDTO.getUserPhoneNumber());
 			preparedStatement.setString(3, memberDTO.getUserId());
-			preparedStatement.setString(4, memberDTO.getUserPw());
+			preparedStatement.setString(4, memberDTO.getUserPw());			
+			preparedStatement.setInt(5, userNumber);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("update() SQL오류!!!");
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// 회원 정보 삭제 -> return void
+	public void delete(int userNumber) {
+		String query = "DELETE FROM TBL_USER WHERE USER_NUMBER = ?";
+
+		try {
+			connection = DBConnecter.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userNumber);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("delete() SQL 오류!!!");
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
