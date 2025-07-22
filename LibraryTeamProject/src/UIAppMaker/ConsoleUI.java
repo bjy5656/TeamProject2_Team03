@@ -201,7 +201,12 @@ public class ConsoleUI {
 					
 					if(userDAO.userInfo(curLoginUser).getUserPw().equals(userPw)) 
 					{
-						userDAO.update(makeNewMember(sc), curLoginUser);
+						UserDTO targetMember = makeNewMember(sc);
+						if(targetMember != null) 
+						{
+							userDAO.update(makeNewMember(sc), curLoginUser);							
+						}
+						
 					}
 					
 					else 
