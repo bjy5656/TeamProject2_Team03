@@ -140,18 +140,15 @@ public class UserDAO {
 	public boolean IdDuplicate(String userId) {
 		String query = "SELECT COUNT(*) " + "FROM TBL_USER " + "WHERE USER_id = ?";
 
-		boolean Duplicate = false;
-
 		try {
 			connection = DBConnecter.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, userId);
 
 			resultSet = preparedStatement.executeQuery();
-
-			if (resultSet.next()) {
-				Duplicate = resultSet.getInt(1) > 0;
-			}
+			resultSet.next();
+			
+			return resultSet.getInt(1) > 0;
 		} catch (SQLException e) {
 			System.out.println("중복확인 오류");
 			e.printStackTrace();
@@ -168,8 +165,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-
-		return Duplicate;
+		return false;
 	} // 아이디 중복확인 메소드 끝
 
 	// 유저 정보 조회 -> return void
