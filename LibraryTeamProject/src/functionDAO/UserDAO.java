@@ -226,7 +226,7 @@ public class UserDAO {
 	// 유저 정보 수정 -> return void\
 	// USER_PW를 입력받아서 맞으면 수정 처리 진행
 	public void update(UserDTO memberDTO, int userNumber) {
-		String query = "UPDATE TBL_USER " + "SET USER_NAME = ? , " + "USER_PHONENUMBER = ? , " + "USER_ID = ? , "
+		String query = "UPDATE TBL_USER " + "SET USER_NAME = ? , " + "USER_PHONENUMBER = ? , "
 				+ "USER_PW = ? " + "WHERE USER_NUMBER = ?";
 
 		try {
@@ -234,9 +234,8 @@ public class UserDAO {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, memberDTO.getUserName());
 			preparedStatement.setString(2, memberDTO.getUserPhoneNumber());
-			preparedStatement.setString(3, memberDTO.getUserId());
-			preparedStatement.setString(4, memberDTO.getUserPw());			
-			preparedStatement.setInt(5, userNumber);
+			preparedStatement.setString(3, memberDTO.getUserPw());			
+			preparedStatement.setInt(4, userNumber);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("update() SQL오류!!!");

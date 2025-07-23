@@ -201,10 +201,10 @@ public class ConsoleUI {
 					
 					if(userDAO.userInfo(curLoginUser).getUserPw().equals(userPw)) 
 					{
-						UserDTO targetMember = makeNewMember(sc);
+						UserDTO targetMember = updateMember(sc);
 						if(targetMember != null) 
 						{
-							userDAO.update(makeNewMember(sc), curLoginUser);							
+							userDAO.update(targetMember, curLoginUser);							
 						}
 						
 					}
@@ -279,9 +279,29 @@ public class ConsoleUI {
 		userPw = sc.next();
 		sc.nextLine();
 		
-		return new UserDTO(userName, userId, userPw, userPhoneNumber);
+		return new UserDTO(userName, userId ,userPw, userPhoneNumber);
 	}
 
+	UserDTO updateMember (Scanner sc) {
+		String userName;
+		String userPhoneNumber;
+		String userPw;
+		
+		System.out.println("이름 : ");
+		userName = sc.next();
+		sc.nextLine();
+
+		System.out.println("전화번호 : ");
+		userPhoneNumber = sc.next();
+		sc.nextLine();
+
+		System.out.println("Pw : ");
+		userPw = sc.next();
+		sc.nextLine();
+		
+		return new UserDTO(userName, userPw, userPhoneNumber);
+	}
+	
 	public int stringToInt(String target) {
 		try {
 			int num = Integer.parseInt(target);
