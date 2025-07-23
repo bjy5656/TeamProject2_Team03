@@ -22,6 +22,15 @@ public class UserDTO {
 		this.userPhoneNumber = userPhoneNumber;
 	}	
 	
+	
+	
+	public UserDTO(String userName, String userPw, String userPhoneNumber) {
+		super();
+		this.userName = userName;
+		this.userPw = userPw;
+		this.userPhoneNumber = userPhoneNumber;
+	}
+
 	// getter 메소드 선언
 
 	public int getUserNum() {
