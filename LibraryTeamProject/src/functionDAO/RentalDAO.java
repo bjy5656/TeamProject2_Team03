@@ -104,53 +104,6 @@ public class RentalDAO {
 		
 		return targetBook;
 	}
-	
-	// 책을 이름으로 검색 -> arrayList로 받기
-	
-	public List<BookDTO> searchBookByTitle(String bookName) 
-	{
-		String query = "SELECT BOOK_NUMBER, BOOK_TITLE, BOOK_AUTHOR, BOOK_AVAILABLE "
-				+ "FROM TBL_BOOKS "
-				+ "WHERE BOOK_TITLE = ?";
-		
-		List<BookDTO> targetBookList = new ArrayList<>();
-		
-		try {
-			connection = DBConnecter.getConnection();
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, bookName);
-			resultSet = preparedStatement.executeQuery();
-			
-			while(resultSet.next()) 
-			{
-				int bookNumber = resultSet.getInt("BOOK_NUMBER");
-				String bookTitle = resultSet.getString("BOOK_TITLE");
-				String bookAuthor = resultSet.getString("BOOK_AUTHOR");
-				String bookAvailableString = resultSet.getString("BOOK_AVAILABLE");
-				boolean isBookAvailable = bookAvailableString.equals("T") ? true : false;
-				
-				BookDTO targetBook = new BookDTO(bookNumber, bookTitle, bookAuthor, isBookAvailable, -1);
-				targetBookList.add(targetBook);
-			}
-			System.out.println(targetBookList);
-			System.out.println("검색 결과 출력 완료");
-			
-		} catch (SQLException e) {
-			System.out.println("책 이름 찾기 문제");
-			e.printStackTrace();
-		} finally {
-			try {
-				if(resultSet != null) resultSet.close();
-				if(preparedStatement != null) preparedStatement.close();
-				if(connection != null) connection.close();
-			} catch (SQLException e) {
-				System.out.println("책 이름 찾기 닫기 문제");
-				e.printStackTrace();
-			}
-		}
-		
-		return targetBookList;
-	} 
 
 	// 유저가 빌린 책들을 조회 -> arrayList로 받기
 	public List<BookDTO> checkBorrowedBook(int userNumber)
